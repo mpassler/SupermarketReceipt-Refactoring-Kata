@@ -13,6 +13,7 @@ public class SupermarketTest {
     private Product rice;
     private Product apples;
     private Product cherryTomatoes;
+    private Product toothpaste;
 
     @BeforeEach
     public void setUp() {
@@ -22,6 +23,8 @@ public class SupermarketTest {
 
         toothbrush = new Product("toothbrush", ProductUnit.EACH);
         catalog.addProduct(toothbrush, 0.99);
+        toothpaste = new Product("toothpaste", ProductUnit.EACH);
+        catalog.addProduct(toothpaste, 1.79);
         rice = new Product("rice", ProductUnit.EACH);
         catalog.addProduct(rice, 2.99);
         apples = new Product("apples", ProductUnit.KILO);
@@ -141,6 +144,24 @@ public class SupermarketTest {
     public void FiveForY_discount_withFour() {
         theCart.addItemQuantity(apples, 4);
         teller.addSpecialOffer(SpecialOfferType.FIVE_FOR_AMOUNT, apples,8.99);
+        Receipt receipt = teller.checksOutArticlesFrom(theCart);
+        Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
+    }
+
+    @Test
+    public void Bundle_discount_withThreeToothBrushesAndOneToothpaste() {
+        theCart.addItemQuantity(toothbrush, 3);
+        theCart.addItemQuantity(toothpaste, 1);
+        teller.addBundleOffer(toothbrush, toothpaste, 10.0);
+        Receipt receipt = teller.checksOutArticlesFrom(theCart);
+        Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
+    }
+
+    @Test
+    public void Bundle_discount_withTwoToothBrushesAndFourToothpaste() {
+        theCart.addItemQuantity(toothbrush, 2);
+        theCart.addItemQuantity(toothpaste, 4);
+        teller.addBundleOffer(toothbrush, toothpaste, 10.0);
         Receipt receipt = teller.checksOutArticlesFrom(theCart);
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
     }
