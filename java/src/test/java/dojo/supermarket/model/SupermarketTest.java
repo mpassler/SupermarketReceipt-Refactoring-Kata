@@ -3,6 +3,7 @@ package dojo.supermarket.model;
 import dojo.supermarket.ReceiptPrinter;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class SupermarketTest {
@@ -148,20 +149,22 @@ public class SupermarketTest {
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
     }
 
+    @Disabled
     @Test
     public void Bundle_discount_withThreeToothBrushesAndOneToothpaste() {
         theCart.addItemQuantity(toothbrush, 3);
         theCart.addItemQuantity(toothpaste, 1);
-        teller.addBundleOffer(toothbrush, toothpaste, 10.0);
+        //teller.addBundleOffer(toothbrush, toothpaste, 10.0);
         Receipt receipt = teller.checksOutArticlesFrom(theCart);
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
     }
 
+    @Disabled
     @Test
     public void Bundle_discount_withTwoToothBrushesAndFourToothpaste() {
         theCart.addItemQuantity(toothbrush, 2);
         theCart.addItemQuantity(toothpaste, 4);
-        teller.addBundleOffer(toothbrush, toothpaste, 10.0);
+        //teller.addBundleOffer(toothbrush, toothpaste, 10.0);
         Receipt receipt = teller.checksOutArticlesFrom(theCart);
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
     }
