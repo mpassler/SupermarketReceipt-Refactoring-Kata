@@ -44,7 +44,6 @@ public class ShoppingCart {
                             Discount discount = new Discount(p, "3 for 2", -discountAmount);
                             receipt.addDiscount(discount);
                         }
-                        continue;
                     }
                     case TWO_FOR_AMOUNT -> {
                         int productsNeeded = 2;
@@ -57,7 +56,6 @@ public class ShoppingCart {
                             Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountN);
                             receipt.addDiscount(discount);
                         }
-                        continue;
                     }
                     case FIVE_FOR_AMOUNT -> {
                         int productsNeeded = 5;
@@ -67,7 +65,6 @@ public class ShoppingCart {
                             Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountTotal);
                             receipt.addDiscount(discount);
                         }
-                        continue;
                     }
                     case TEN_PERCENT_DISCOUNT -> {
                         Discount discount = new Discount(p, offer.argument + "% off", -quantity * unitPrice * offer.argument / 100.0);
