@@ -38,8 +38,8 @@ public class ShoppingCart {
                 if (offer.offerType == SpecialOfferType.THREE_FOR_TWO) {
                     int x = 3;
                     int numberOfXs = quantityAsInt / x;
-                    if (quantityAsInt > 2) {
-                        double discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
+                    if (quantityAsInt >= x) {
+                        double discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % x * unitPrice);
                         Discount discount = new Discount(p, "3 for 2", -discountAmount);
                         receipt.addDiscount(discount);
                     }
@@ -47,13 +47,13 @@ public class ShoppingCart {
                 }
                 if (offer.offerType == SpecialOfferType.TWO_FOR_AMOUNT) {
                     int x = 2;
-                    if (quantityAsInt >= 2) {
+                    if (quantityAsInt >= x) {
                         int intDivision = quantityAsInt / x;
                         double pricePerUnit = offer.argument * intDivision;
-                        double theTotal = (quantityAsInt % 2) * unitPrice;
+                        double theTotal = (quantityAsInt % x) * unitPrice;
                         double total = pricePerUnit + theTotal;
                         double discountN = unitPrice * quantity - total;
-                        Discount discount = new Discount(p, "2 for " + offer.argument, -discountN);
+                        Discount discount = new Discount(p, x + " for " + offer.argument, -discountN);
                         receipt.addDiscount(discount);
                     }
                     continue;
@@ -61,8 +61,8 @@ public class ShoppingCart {
                 if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT) {
                     int x = 5;
                     int numberOfXs = quantityAsInt / x;
-                    if (quantityAsInt >= 5) {
-                        double discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
+                    if (quantityAsInt >= x) {
+                        double discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % x * unitPrice);
                         Discount discount = new Discount(p, x + " for " + offer.argument, -discountTotal);
                         receipt.addDiscount(discount);
                     }
