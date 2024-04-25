@@ -72,9 +72,6 @@ public class ShoppingCart {
                         x = 5;
                     }
                     int numberOfXs = quantityAsInt / x;
-                    if (offer.offerType == SpecialOfferType.TEN_PERCENT_DISCOUNT) {
-                        discount = new Discount(p, offer.argument + "% off", -quantity * unitPrice * offer.argument / 100.0);
-                    }
                     if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT && quantityAsInt >= 5) {
                         double discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
                         discount = new Discount(p, x + " for " + offer.argument, -discountTotal);
@@ -85,16 +82,9 @@ public class ShoppingCart {
                 } else {
                     Discount discount = null;
                     int x = 1;
-                    if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT) {
-                        x = 5;
-                    }
                     int numberOfXs = quantityAsInt / x;
                     if (offer.offerType == SpecialOfferType.TEN_PERCENT_DISCOUNT) {
                         discount = new Discount(p, offer.argument + "% off", -quantity * unitPrice * offer.argument / 100.0);
-                    }
-                    if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT && quantityAsInt >= 5) {
-                        double discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
-                        discount = new Discount(p, x + " for " + offer.argument, -discountTotal);
                     }
                     if (discount != null)
                         receipt.addDiscount(discount);
