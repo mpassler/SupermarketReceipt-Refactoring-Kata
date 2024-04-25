@@ -49,11 +49,8 @@ public class ShoppingCart {
                         int productsNeeded = 2;
                         if (quantityAsInt >= productsNeeded) {
                             int possibleOffers = quantityAsInt / productsNeeded;
-                            double pricePerUnit = offer.argument * possibleOffers;
-                            double theTotal = (quantityAsInt % productsNeeded) * unitPrice;
-                            double total = pricePerUnit + theTotal;
-                            double discountN = unitPrice * quantity - total;
-                            Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountN);
+                            double discountAmount = quantity * unitPrice - (offer.argument * possibleOffers + quantityAsInt % productsNeeded * unitPrice);
+                            Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountAmount);
                             receipt.addDiscount(discount);
                         }
                     }
@@ -61,13 +58,14 @@ public class ShoppingCart {
                         int productsNeeded = 5;
                         if (quantityAsInt >= productsNeeded) {
                             int possibleOffers = quantityAsInt / productsNeeded;
-                            double discountTotal = unitPrice * quantity - (offer.argument * possibleOffers + quantityAsInt % productsNeeded * unitPrice);
-                            Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountTotal);
+                            double discountAmount = quantity * unitPrice - (offer.argument * possibleOffers + quantityAsInt % productsNeeded * unitPrice);
+                            Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountAmount);
                             receipt.addDiscount(discount);
                         }
                     }
                     case TEN_PERCENT_DISCOUNT -> {
-                        Discount discount = new Discount(p, offer.argument + "% off", -quantity * unitPrice * offer.argument / 100.0);
+                        double discountAmount = quantity * unitPrice * offer.argument / 100.0;
+                        Discount discount = new Discount(p, offer.argument + "% off", -discountAmount);
                         receipt.addDiscount(discount);
                     }
                 }
