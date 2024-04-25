@@ -38,11 +38,9 @@ public class ShoppingCart {
                 if (offer.offerType == SpecialOfferType.THREE_FOR_TWO) {
                     Discount discount = null;
                     int x = 1;
-                    if (offer.offerType == SpecialOfferType.THREE_FOR_TWO) {
-                        x = 3;
-                    }
+                    x = 3;
                     int numberOfXs = quantityAsInt / x;
-                    if (offer.offerType == SpecialOfferType.THREE_FOR_TWO && quantityAsInt > 2) {
+                    if (quantityAsInt > 2) {
                         double discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
                         discount = new Discount(p, "3 for 2", -discountAmount);
                     }
@@ -52,9 +50,7 @@ public class ShoppingCart {
                 } else {
                     Discount discount = null;
                     int x = 1;
-                    if (offer.offerType == SpecialOfferType.THREE_FOR_TWO) {
-
-                    } else if (offer.offerType == SpecialOfferType.TWO_FOR_AMOUNT) {
+                    if (offer.offerType == SpecialOfferType.TWO_FOR_AMOUNT) {
                         x = 2;
                         if (quantityAsInt >= 2) {
                             int intDivision = quantityAsInt / x;
@@ -64,7 +60,6 @@ public class ShoppingCart {
                             double discountN = unitPrice * quantity - total;
                             discount = new Discount(p, "2 for " + offer.argument, -discountN);
                         }
-
                     }
                     if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT) {
                         x = 5;
