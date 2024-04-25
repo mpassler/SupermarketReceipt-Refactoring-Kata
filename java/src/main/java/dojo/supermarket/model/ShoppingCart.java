@@ -39,7 +39,9 @@ public class ShoppingCart {
                 Offer offer = offers.get(p);
                 double unitPrice = catalog.getUnitPrice(p);
                 int quantityAsInt = (int) quantity;
+                if(offer.offerType == SpecialOfferType.THREE_FOR_TWO) {} else {}
                 extracted(receipt, p, offer, quantityAsInt, unitPrice, quantity);
+                continue;
             }
         }
     }
