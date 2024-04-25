@@ -19,15 +19,12 @@ public class Teller {
 
     public Receipt checksOutArticlesFrom(ShoppingCart theCart) {
         Receipt receipt = new Receipt();
-        List<ProductQuantity> productQuantities = theCart.getItems();
-        for (ProductQuantity pq: productQuantities) {
-            Product p = pq.getProduct();
-            double quantity = pq.getQuantity();
-            double unitPrice = catalog.getUnitPrice(p);
-            double price = quantity * unitPrice;
-            receipt.addProduct(p, quantity, unitPrice, price);
-        }
-        Map<Product, Double> productsWithCount = theCart.productQuantities();
+        addProductsToReceipt(theCart.getItems(), receipt);
+        addDiscountsToReceipt(theCart.productQuantities(), receipt);
+        return receipt;
+    }
+
+    private void addDiscountsToReceipt(Map<Product, Double> productsWithCount, Receipt receipt) {
         for (Product product : productsWithCount.keySet()) {
             double quantity = productsWithCount.get(product);
             if (offers.containsKey(product)) {
@@ -60,8 +57,16 @@ public class Teller {
                 }
             }
         }
+    }
 
-        return receipt;
+    private void addProductsToReceipt(List<ProductQuantity> productQuantities, Receipt receipt) {
+        for (ProductQuantity productQuantity: productQuantities) {
+            Product product = productQuantity.getProduct();
+            double quantity = productQuantity.getQuantity();
+            double unitPrice = catalog.getUnitPrice(product);
+            double price = quantity * unitPrice;
+            receipt.addProduct(product, quantity, unitPrice, price);
+        }
     }
 
     private void calculateAndAddDiscount(Receipt receipt, Product p, double quantity, Offer offer, double unitPrice, int quantityAsInt, int productsNeeded) {
