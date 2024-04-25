@@ -149,6 +149,18 @@ public class SupermarketTest {
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
     }
 
+    @Test
+    public void FiveForY_discount_withTwoItems() {
+        theCart.addItemQuantity(apples, 6);
+        theCart.addItem(toothbrush);
+        theCart.addItem(toothbrush);
+        theCart.addItem(toothbrush);
+        teller.addSpecialOffer(SpecialOfferType.FIVE_FOR_AMOUNT, apples,8.99);
+        teller.addSpecialOffer(SpecialOfferType.THREE_FOR_TWO, toothbrush, catalog.getUnitPrice(toothbrush));
+        Receipt receipt = teller.checksOutArticlesFrom(theCart);
+        Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
+    }
+
     @Disabled
     @Test
     public void Bundle_discount_withThreeToothBrushesAndOneToothpaste() {
