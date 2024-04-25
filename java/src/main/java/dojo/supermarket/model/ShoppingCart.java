@@ -27,49 +27,4 @@ public class ShoppingCart {
             productQuantities.put(product, quantity);
         }
     }
-
-    void handleOffers(Receipt receipt, Map<Product, Offer> offers, SupermarketCatalog catalog) {
-        for (Product p : productQuantities().keySet()) {
-            double quantity = productQuantities.get(p);
-            if (offers.containsKey(p)) {
-                Offer offer = offers.get(p);
-                double unitPrice = catalog.getUnitPrice(p);
-                int quantityAsInt = (int) quantity;
-                switch (offer.offerType) {
-                    case THREE_FOR_TWO -> {
-                        int productsNeeded = 3;
-                        if (quantityAsInt >= productsNeeded) {
-                            int possibleOffers = quantityAsInt / productsNeeded;
-                            double discountAmount = quantity * unitPrice - ((possibleOffers * 2 * unitPrice) + quantityAsInt % productsNeeded * unitPrice);
-                            Discount discount = new Discount(p, "3 for 2", -discountAmount);
-                            receipt.addDiscount(discount);
-                        }
-                    }
-                    case TWO_FOR_AMOUNT -> {
-                        int productsNeeded = 2;
-                        calculateAndAddDiscount(receipt, p, quantity, offer, unitPrice, quantityAsInt, productsNeeded);
-                    }
-                    case FIVE_FOR_AMOUNT -> {
-                        int productsNeeded = 5;
-                        calculateAndAddDiscount(receipt, p, quantity, offer, unitPrice, quantityAsInt, productsNeeded);
-                    }
-                    case TEN_PERCENT_DISCOUNT -> {
-                        double discountAmount = quantity * unitPrice * offer.argument / 100.0;
-                        Discount discount = new Discount(p, offer.argument + "% off", -discountAmount);
-                        receipt.addDiscount(discount);
-                    }
-                }
-            }
-        }
-    }
-
-    private void calculateAndAddDiscount(Receipt receipt, Product p, double quantity, Offer offer, double unitPrice, int quantityAsInt, int productsNeeded) {
-        if (quantityAsInt >= productsNeeded) {
-            int possibleOffers = quantityAsInt / productsNeeded;
-            double discountAmount = quantity * unitPrice - (offer.argument * possibleOffers + quantityAsInt % productsNeeded * unitPrice);
-            Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountAmount);
-            receipt.addDiscount(discount);
-        }
-    }
-
 }
