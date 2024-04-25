@@ -68,11 +68,9 @@ public class ShoppingCart {
                 if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT) {
                     Discount discount = null;
                     int x = 1;
-                    if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT) {
-                        x = 5;
-                    }
+                    x = 5;
                     int numberOfXs = quantityAsInt / x;
-                    if (offer.offerType == SpecialOfferType.FIVE_FOR_AMOUNT && quantityAsInt >= 5) {
+                    if (quantityAsInt >= 5) {
                         double discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
                         discount = new Discount(p, x + " for " + offer.argument, -discountTotal);
                     }
