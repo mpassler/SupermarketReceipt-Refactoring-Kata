@@ -38,8 +38,8 @@ public class ShoppingCart {
                 switch (offer.offerType) {
                     case THREE_FOR_TWO -> {
                         int productsNeeded = 3;
-                        int possibleOffers = quantityAsInt / productsNeeded;
                         if (quantityAsInt >= productsNeeded) {
+                            int possibleOffers = quantityAsInt / productsNeeded;
                             double discountAmount = quantity * unitPrice - ((possibleOffers * 2 * unitPrice) + quantityAsInt % productsNeeded * unitPrice);
                             Discount discount = new Discount(p, "3 for 2", -discountAmount);
                             receipt.addDiscount(discount);
@@ -61,8 +61,8 @@ public class ShoppingCart {
                     }
                     case FIVE_FOR_AMOUNT -> {
                         int productsNeeded = 5;
-                        int possibleOffers = quantityAsInt / productsNeeded;
                         if (quantityAsInt >= productsNeeded) {
+                            int possibleOffers = quantityAsInt / productsNeeded;
                             double discountTotal = unitPrice * quantity - (offer.argument * possibleOffers + quantityAsInt % productsNeeded * unitPrice);
                             Discount discount = new Discount(p, productsNeeded + " for " + offer.argument, -discountTotal);
                             receipt.addDiscount(discount);
