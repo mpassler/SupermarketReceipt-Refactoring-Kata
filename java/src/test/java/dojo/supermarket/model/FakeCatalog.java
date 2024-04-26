@@ -9,12 +9,12 @@ public class FakeCatalog implements SupermarketCatalog {
 
     @Override
     public void addProduct(Product product, double price) {
-        this.products.put(product.getName(), product);
-        this.prices.put(product.getName(), price);
+        this.products.put(product.name(), product);
+        this.prices.put(product.name(), price);
     }
 
     @Override
     public double getUnitPrice(Product p) {
-        return this.prices.get(p.getName());
+        return this.prices.get(p.name());
     }
 }

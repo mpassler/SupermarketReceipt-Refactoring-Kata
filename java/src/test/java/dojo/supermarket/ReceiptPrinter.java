@@ -34,7 +34,7 @@ public class ReceiptPrinter {
 
     private String presentReceiptItem(ReceiptItem item) {
         String totalPricePresentation = presentPrice(item.getTotalPrice());
-        String name = item.getProduct().getName();
+        String name = item.getProduct().name();
 
         String line = formatLineWithWhitespace(name, totalPricePresentation);
 
@@ -45,7 +45,7 @@ public class ReceiptPrinter {
     }
 
     private String presentDiscount(Discount discount) {
-        String name = discount.getDescription() + "(" + discount.getProduct().getName() + ")";
+        String name = discount.getDescription() + "(" + discount.getProduct().name() + ")";
         String value = presentPrice(discount.getDiscountAmount());
 
         return formatLineWithWhitespace(name, value);
@@ -74,7 +74,7 @@ public class ReceiptPrinter {
     }
 
     private static String presentQuantity(ReceiptItem item) {
-        return ProductUnit.EACH.equals(item.getProduct().getUnit())
+        return ProductUnit.EACH.equals(item.getProduct().unit())
                 ? String.format("%d", (int)item.getQuantity())
                 : String.format(Locale.UK, "%.3f", item.getQuantity());
     }
