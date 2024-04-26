@@ -17,6 +17,10 @@ public class Teller {
         offers.put(product, new Offer(offerType, product, argument));
     }
 
+    public void addBundleOffer(Product product, Product otherProduct, double discount) {
+        offers.put(product, new Offer(SpecialOfferType.BUNDLE, otherProduct, discount));
+    }
+
     public Receipt checksOutArticlesFrom(ShoppingCart theCart) {
         Receipt receipt = new Receipt();
         addProductsToReceipt(theCart.getItems(), receipt);
