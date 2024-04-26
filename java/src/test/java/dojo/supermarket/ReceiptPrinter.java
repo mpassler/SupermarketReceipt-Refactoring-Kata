@@ -29,13 +29,13 @@ public class ReceiptPrinter {
     }
 
     private String presentReceiptItem(ReceiptItem item) {
-        String totalPricePresentation = presentPrice(item.getTotalPrice());
-        String name = item.getProduct().name();
+        String totalPricePresentation = presentPrice(item.totalPrice());
+        String name = item.product().name();
 
         String line = formatLineWithWhitespace(name, totalPricePresentation);
 
-        if (item.getQuantity() != 1) {
-            line += "  " + presentPrice(item.getPrice()) + " * " + presentQuantity(item) + "\n";
+        if (item.quantity() != 1) {
+            line += "  " + presentPrice(item.price()) + " * " + presentQuantity(item) + "\n";
         }
         return line;
     }
@@ -68,8 +68,8 @@ public class ReceiptPrinter {
     }
 
     private static String presentQuantity(ReceiptItem item) {
-        return ProductUnit.EACH.equals(item.getProduct().unit())
-                ? String.format("%d", (int)item.getQuantity())
-                : String.format(Locale.UK, "%.3f", item.getQuantity());
+        return ProductUnit.EACH.equals(item.product().unit())
+                ? String.format("%d", (int)item.quantity())
+                : String.format(Locale.UK, "%.3f", item.quantity());
     }
 }

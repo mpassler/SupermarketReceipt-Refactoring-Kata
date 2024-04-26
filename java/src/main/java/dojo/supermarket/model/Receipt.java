@@ -12,7 +12,7 @@ public class Receipt {
     public double getTotalPrice() {
         double total = 0.0;
         for (ReceiptItem item : items) {
-            total += item.getTotalPrice();
+            total += item.totalPrice();
         }
         for (Discount discount : discounts) {
             total += discount.getDiscountAmount();

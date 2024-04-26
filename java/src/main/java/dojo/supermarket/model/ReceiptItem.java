@@ -2,35 +2,7 @@ package dojo.supermarket.model;
 
 import java.util.Objects;
 
-public class ReceiptItem {
-
-    private final Product product;
-    private final double price;
-    private final double totalPrice;
-    private final double quantity;
-
-    public ReceiptItem(Product p, double quantity, double price, double totalPrice) {
-        this.product = p;
-        this.quantity = quantity;
-        this.price = price;
-        this.totalPrice = totalPrice;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+public record ReceiptItem(Product product, double quantity, double price, double totalPrice) {
 
     @Override
     public boolean equals(Object o) {
@@ -42,8 +14,4 @@ public class ReceiptItem {
                 Objects.equals(product, that.product);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(product, price, totalPrice, quantity);
-    }
 }
