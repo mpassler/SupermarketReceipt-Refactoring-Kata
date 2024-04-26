@@ -168,6 +168,12 @@ public class SupermarketTest {
         teller.addBundleOffer(toothbrush, toothpaste, 10.0);
         Receipt receipt = teller.checksOutArticlesFrom(theCart);
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
+//        toothbrush                          2.97
+//        0.99 * 3
+//        toothpaste                          1.79
+//        Bundle 10.0%(toothbrush)           -0.28
+//
+//        Total:                              4.48
     }
 
     @Test
@@ -177,5 +183,12 @@ public class SupermarketTest {
         teller.addBundleOffer(toothbrush, toothpaste, 10.0);
         Receipt receipt = teller.checksOutArticlesFrom(theCart);
         Approvals.verify(new ReceiptPrinter(40).printReceipt(receipt));
+//        toothbrush                          1.98
+//        0.99 * 2
+//        toothpaste                          7.16
+//        1.79 * 4
+//        Bundle 10.0%(toothbrush)           -0.56
+//
+//        Total:                              8.58
     }
 }
