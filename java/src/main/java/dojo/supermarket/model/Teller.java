@@ -25,42 +25,43 @@ public class Teller {
     }
 
     private void addDiscountsToReceipt(Map<Product, Double> productsWithCount, Receipt receipt) {
-        for (Product product : productsWithCount.keySet()) {
-            double quantity = productsWithCount.get(product);
-            if (offers.containsKey(product)) {
-                Offer offer = offers.get(product);
-                double unitPrice = catalog.getUnitPrice(product);
-                int quantityAsInt = (int) quantity;
-                switch (offer.offerType) {
-                    case THREE_FOR_TWO -> {
-                        int productsNeeded = 3;
-                        if (quantityAsInt >= productsNeeded) {
-                            int possibleOffers = quantityAsInt / productsNeeded;
-                            double discountAmount = quantity * unitPrice - ((possibleOffers * 2 * unitPrice) + quantityAsInt % productsNeeded * unitPrice);
-                            Discount discount = new Discount(product, "3 for 2", -discountAmount);
-                            receipt.addDiscount(discount);
-                        }
-                    }
-                    case TWO_FOR_AMOUNT -> {
-                        int productsNeeded = 2;
-                        calculateAndAddDiscount(receipt, product, quantity, offer, unitPrice, quantityAsInt, productsNeeded);
-                    }
-                    case FIVE_FOR_AMOUNT -> {
-                        int productsNeeded = 5;
-                        calculateAndAddDiscount(receipt, product, quantity, offer, unitPrice, quantityAsInt, productsNeeded);
-                    }
-                    case TEN_PERCENT_DISCOUNT -> {
-                        double discountAmount = quantity * unitPrice * offer.argument / 100.0;
-                        Discount discount = new Discount(product, offer.argument + "% off", -discountAmount);
-                        receipt.addDiscount(discount);
-                    }
+        productsWithCount.keySet().stream()
+                .filter(offers::containsKey)
+                .forEach(product -> addDiscountToReceiptForProduct(receipt, product, productsWithCount.get(product)));
+    }
+
+    private void addDiscountToReceiptForProduct(Receipt receipt, Product product, double quantity) {
+        Offer offer = offers.get(product);
+        double unitPrice = catalog.getUnitPrice(product);
+        int quantityAsInt = (int) quantity;
+        switch (offer.offerType) {
+            case THREE_FOR_TWO -> {
+                int productsNeeded = 3;
+                if (quantityAsInt >= productsNeeded) {
+                    int possibleOffers = quantityAsInt / productsNeeded;
+                    double discountAmount = quantity * unitPrice - ((possibleOffers * 2 * unitPrice) + quantityAsInt % productsNeeded * unitPrice);
+                    Discount discount = new Discount(product, "3 for 2", -discountAmount);
+                    receipt.addDiscount(discount);
                 }
+            }
+            case TWO_FOR_AMOUNT -> {
+                int productsNeeded = 2;
+                calculateAndAddDiscount(receipt, product, quantity, offer, unitPrice, quantityAsInt, productsNeeded);
+            }
+            case FIVE_FOR_AMOUNT -> {
+                int productsNeeded = 5;
+                calculateAndAddDiscount(receipt, product, quantity, offer, unitPrice, quantityAsInt, productsNeeded);
+            }
+            case TEN_PERCENT_DISCOUNT -> {
+                double discountAmount = quantity * unitPrice * offer.argument / 100.0;
+                Discount discount = new Discount(product, offer.argument + "% off", -discountAmount);
+                receipt.addDiscount(discount);
             }
         }
     }
 
     private void addProductsToReceipt(List<ProductQuantity> productQuantities, Receipt receipt) {
-        for (ProductQuantity productQuantity: productQuantities) {
+        for (ProductQuantity productQuantity : productQuantities) {
             Product product = productQuantity.getProduct();
             double quantity = productQuantity.getQuantity();
             double unitPrice = catalog.getUnitPrice(product);
